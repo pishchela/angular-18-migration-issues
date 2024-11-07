@@ -1,17 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        HttpClientTestingModule,
-        AppComponent
-      ],
-    }).compileComponents();
+    imports: [HttpClientModule,
+        AppComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+}{
+    imports: [HttpClientTestingModule,
+        AppComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
+}).compileComponents();
   });
 
   it('should create the app', () => {
